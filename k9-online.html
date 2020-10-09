@@ -114,7 +114,11 @@ function readTextFile(file, value, map) {
                                 document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
                                 return;
                             }
-                        } catch (e) {console.error(e);}
+                        } catch (e) {
+                            console.error(e);
+                            document.getElementById("content").innerHTML = claz + " - DEBUG: Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
+                            return;
+                        }
                     }
                 }
 
