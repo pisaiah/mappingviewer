@@ -107,7 +107,8 @@ function readTextFile(file, value, map) {
                     var meths = myobj.methods;
                     for (i = 0; i < meths.length; i++) {
                         var claz = meths[i];
-                        document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "," + claz.intermediary;
+                        if (null === claz.intermediary)
+                            continue;
                         if (claz.intermediary.split(".")[1].intermediary === value) {
                             document.getElementById("content").innerHTML = "Obf: " + meths.obf + ", Intermediary: " + meths.intermediary + ", Yarn: " + meths.yarn;
                             return;
@@ -119,6 +120,8 @@ function readTextFile(file, value, map) {
                     var fiels = myobj.fields;
                     for (i = 0; i < fiels.length; i++) {
                         var claz = fiels[i];
+                        if (null === claz.intermediary)
+                            continue;
                         if (claz.intermediary.split(".")[1].intermediary === value) {
                             document.getElementById("content").innerHTML = "Obf: " + fiels.obf + ", Intermediary: " + fiels.intermediary + ", Yarn: " + fiels.yarn;
                             return;
