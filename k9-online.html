@@ -38,9 +38,9 @@ footer {position:absolute; bottom:0; width:100%;}
     <option value="1.12.2">1.12.2</option>
     <option value="1.11.2" disabled>1.11.2</option>
     <option value="1.10.2" disabled>1.10.2</option>
-    <option value="1.12.2" disabled>1.9.4</option>
-    <option value="1.8.9" disabled>1.8.9</option>
-    <option value="1.8.8" disabled>1.8.8</option>
+    <option value="1.9.4" disabled>1.9.4</option>
+    <option value="1.8.9">1.8.9</option>
+    <option value="1.8.8">1.8.8</option>
     <option value="1.7.10" disabled>1.7.10</option>
     <option value="1.7.2" disabled>1.7.2</option>
     <option value="1.6.4" disabled>1.6.4</option>
@@ -109,11 +109,12 @@ function readTextFile(file, value, map) {
                     var meths = myobj.methods;
                     for (i = 0; i < meths.length; i++) {
                         var claz = meths[i];
-                        if (claz.intermediary === undefined) continue;
-                        if (claz.intermediary.split(".")[1].intermediary === value) {
-                            document.getElementById("content").innerHTML = "Obf: " + meths.obf + ", Intermediary: " + meths.intermediary + ", Yarn: " + meths.yarn;
-                            return;
-                        }
+                        try {
+                            if (claz.intermediary.split(".")[1].intermediary === value) {
+                                document.getElementById("content").innerHTML = "Obf: " + meths.obf + ", Intermediary: " + meths.intermediary + ", Yarn: " + meths.yarn;
+                                return;
+                            }
+                        } catch (e) {console.error(e);}
                     }
                 }
 
@@ -121,11 +122,12 @@ function readTextFile(file, value, map) {
                     var fiels = myobj.fields;
                     for (i = 0; i < fiels.length; i++) {
                         var claz = fiels[i];
-                        if (claz.intermediary === undefined) continue;
-                        if (claz.intermediary.split(".")[1].intermediary === value) {
-                            document.getElementById("content").innerHTML = "Obf: " + fiels.obf + ", Intermediary: " + fiels.intermediary + ", Yarn: " + fiels.yarn;
-                            return;
-                        }
+                        try {
+                            if (claz.intermediary.split(".")[1].intermediary === value) {
+                                document.getElementById("content").innerHTML = "Obf: " + fiels.obf + ", Intermediary: " + fiels.intermediary + ", Yarn: " + fiels.yarn;
+                                return;
+                            }
+                        } catch (e) {console.error(e);}
                     }
                 }
 
