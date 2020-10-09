@@ -107,6 +107,7 @@ function readTextFile(file, value, map) {
                     var meths = myobj.methods;
                     for (i = 0; i < meths.length; i++) {
                         var claz = meths[i];
+                        document.getElementById("content").innerHTML = document.getElementById("content").innerHTML + "," + claz.intermediary;
                         if (claz.intermediary.split(".")[1].intermediary === value) {
                             document.getElementById("content").innerHTML = "Obf: " + meths.obf + ", Intermediary: " + meths.intermediary + ", Yarn: " + meths.yarn;
                             return;
