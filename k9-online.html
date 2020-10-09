@@ -1,31 +1,20 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<header class="w3-container w3-black">
-  <h1>MinecraftMappings Viewer</h1>
-</header>
+<header class="w3-container w3-black"><h1>MinecraftMappings Viewer</h1></header>
 <body>
 <div class="w3-container pad">
-<p>
-This tool creates transitive mappings for various Minecraft versions. (intermediary2yarn, spigot2yarn, mcp2intermediary, etc..)
-<br>
-Original work by <a href="https://github.com/phase/">phase</a>. Updated by me, view on Github: <a href="https://github.com/bukkitfabric/minecraftmappings">BukkitFabric/MinecraftMappings</a>
-</p>
+<p>This tool creates transitive mappings for various Minecraft versions. (intermediary2yarn, spigot2yarn, mcp2intermediary, etc..)<br>
+Original work by <a href="https://github.com/phase/">phase</a>. Updated by me, view on Github: <a href="https://github.com/bukkitfabric/minecraftmappings">BukkitFabric/MinecraftMappings</a></p>
 
 <style>
-label {
-  display: inline-block;
-  min-width: 148px;
-}
-form {
-  display: inline-block;
-  padding: 4px;
-}
-input  { min-width: 280px;}
-select { min-width: 280px; }
-input, select { padding: 6px;}
-.pad { padding-left: 64px; padding-top:32px;}
-footer { position:absolute; bottom:0; width:100%;}
+label {display: inline-block;min-width: 148px;}
+form {display: inline-block; padding: 4px;}
+input  {min-width:280px;}
+select {min-width:280px;}
+input, select {padding: 6px;}
+.pad {padding-left:64px; padding-top:32px;}
+footer {position:absolute; bottom:0; width:100%;}
 </style>
 
 <form>
@@ -92,8 +81,7 @@ function doTest() {
   e = document.getElementById("value");
   var value = e.value;
 
-  readTextFile("mappings/" + ver + ".json", value, map);
-  //document.getElementById("test").innerHTML = "DEBUG: " + type + "," + ver + "," + map + "," + value;
+  readTextFile("mappings/" + ver + ".json", value, type);
 }
 function readTextFile(file, value, map) {
     var rawFile = new XMLHttpRequest();
