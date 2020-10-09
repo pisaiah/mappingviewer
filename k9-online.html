@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<header class="w3-container w3-black"><h1>MinecraftMappings Viewer</h1></header>
+<header class="w3-container w3-black"><h1>MinecraftMappings Viewer&nbsp;<sup><small>BETA</small></sup></h1></header>
 <body>
 <div class="w3-container pad">
 <p>This tool creates transitive mappings for various Minecraft versions. (intermediary2yarn, spigot2yarn, mcp2intermediary, etc..)<br>
-Original work by <a href="https://github.com/phase/">phase</a>. Updated by me, view on Github: <a href="https://github.com/bukkitfabric/minecraftmappings">BukkitFabric/MinecraftMappings</a></p>
+Original work by <a href="https://github.com/phase/">phase</a>. Updated by me. View mappings on Github: <a href="https://github.com/bukkitfabric/minecraftmappings">BukkitFabric/MinecraftMappings</a></p>
 
 <style>
 label {display: inline-block;min-width: 148px;}
@@ -65,7 +65,9 @@ footer {position:absolute; bottom:0; width:100%;}
 </form>
 
 <br><br>
-<button onclick="doTest()">Go</button>
+<button onclick="doTest()">Go Lookup</button>
+<br><br><br>
+<a href="https://billing.apexminecrafthosting.com/aff.php?aff=3548"><img src="https://apexminecrafthosting.com/images/apex-hosting-mobile.png" width="594" height="100" border="0"></a>
 
 <script>
 function doTest() {
@@ -107,8 +109,7 @@ function readTextFile(file, value, map) {
                     var meths = myobj.methods;
                     for (i = 0; i < meths.length; i++) {
                         var claz = meths[i];
-                        if (null === claz.intermediary)
-                            continue;
+                        if (claz.intermediary === undefined) continue;
                         if (claz.intermediary.split(".")[1].intermediary === value) {
                             document.getElementById("content").innerHTML = "Obf: " + meths.obf + ", Intermediary: " + meths.intermediary + ", Yarn: " + meths.yarn;
                             return;
@@ -120,8 +121,7 @@ function readTextFile(file, value, map) {
                     var fiels = myobj.fields;
                     for (i = 0; i < fiels.length; i++) {
                         var claz = fiels[i];
-                        if (null === claz.intermediary)
-                            continue;
+                        if (claz.intermediary === undefined) continue;
                         if (claz.intermediary.split(".")[1].intermediary === value) {
                             document.getElementById("content").innerHTML = "Obf: " + fiels.obf + ", Intermediary: " + fiels.intermediary + ", Yarn: " + fiels.yarn;
                             return;
@@ -135,13 +135,12 @@ function readTextFile(file, value, map) {
     }
     rawFile.send();
 }
-</script>
-<p id="test"></p>
+</script><br><br><br>
 <p id="content">
-&nbsp;
+&nbsp;<i>Output will be here.</i>
 </p>
 
 </div>
 </body>
-<footer class="w3-container w3-black"><small class="w3-small">Copyright &copy; 2020 <a href="https://javazilla.com">Javazilla.com</a> &nbsp;|&nbsp; View Mapping Data on <a href="https://github.com/bukkitfabric/minecraftmappings">Github</a></small></footer>
+<footer class="w3-container w3-black"><small class="w3-small">Copyright &copy; 2020 <a href="https://github.com/BukkitFabric/MinecraftMappings/blob/master/LICENSE">under MIT</a> &nbsp;|&nbsp; View Mapping Data on <a href="https://github.com/bukkitfabric/minecraftmappings">Github</a></small></footer>
 </html>
