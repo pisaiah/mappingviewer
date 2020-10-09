@@ -109,14 +109,11 @@ function readTextFile(file, value, map) {
                     var meths = myobj.methods;
                     for (i = 0; i < meths.length; i++) {
                         var claz = meths[i];
-                        try {
-                            if (claz.intermediary.split(".")[1].intermediary === value) {
+                        if (Object.keys(claz).includes("intermediary"))
+                            if (claz.intermediary.split(".")[1] === value) {
                                 document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
                                 return;
                             }
-                        } catch (e) {
-                            console.error(e);
-                            document.getElementById("content").innerHTML = claz + " - DEBUG: Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
                         }
                     }
                 }
@@ -125,12 +122,12 @@ function readTextFile(file, value, map) {
                     var fiels = myobj.fields;
                     for (i = 0; i < fiels.length; i++) {
                         var claz = fiels[i];
-                        try {
-                            if (claz.intermediary.split(".")[1].intermediary === value) {
+                        if (Object.keys(claz).includes("intermediary"))
+                            if (claz.intermediary.split(".")[1] === value) {
                                 document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
                                 return;
                             }
-                        } catch (e) {console.error(e);}
+                        }
                     }
                 }
 
