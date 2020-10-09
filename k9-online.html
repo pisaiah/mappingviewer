@@ -98,7 +98,8 @@ function readTextFile(file) {
         if(rawFile.readyState === 4) {
             if(rawFile.status === 200 || rawFile.status == 0) {
                 var allText = rawFile.responseText;
-                alert(rawFile);
+                //alert(rawFile);
+                document.getElementById("content").innerHTML = allText;
             }
         }
     }
@@ -106,6 +107,9 @@ function readTextFile(file) {
 }
 </script>
 <p id="test"></p>
+<p id="content">
+TEST TEST TEST TEST TEST
+</p>
 
 </div>
 </body>
