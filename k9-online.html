@@ -111,7 +111,7 @@ function readTextFile(file, value, map) {
                         var claz = meths[i];
                         try {
                             if (claz.intermediary.split(".")[1].intermediary === value) {
-                                document.getElementById("content").innerHTML = "Obf: " + meths.obf + ", Intermediary: " + meths.intermediary + ", Yarn: " + meths.yarn;
+                                document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
                                 return;
                             }
                         } catch (e) {console.error(e);}
@@ -124,7 +124,7 @@ function readTextFile(file, value, map) {
                         var claz = fiels[i];
                         try {
                             if (claz.intermediary.split(".")[1].intermediary === value) {
-                                document.getElementById("content").innerHTML = "Obf: " + fiels.obf + ", Intermediary: " + fiels.intermediary + ", Yarn: " + fiels.yarn;
+                                document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
                                 return;
                             }
                         } catch (e) {console.error(e);}
