@@ -93,10 +93,6 @@ function verChange() {
 </form>
 
 <br><br>
-<button onclick="doTest()">Go Lookup</button>
-<br><br><br>
-<a href="https://billing.apexminecrafthosting.com/aff.php?aff=3548"><img src="https://apexminecrafthosting.com/images/apex-hosting-mobile.png" width="594" height="100" border="0"></a>
-
 <script>
 function doTest() {
   var e = document.getElementById("type");
@@ -175,7 +171,7 @@ function readTextFile(file, value, map, mage) {
                     for (i = 0; i < fiels.length; i++) {
                         var claz = fiels[i];
                         if (Object.keys(claz).includes("intermediary")) {
-                            if (claz.[getMapN(mage)].split(".")[1] === value) {
+                            if (claz[getMapN(mage)].split(".")[1] === value) {
                                 var writ = "Result: ";
                                 var t = getMapX(mage).split(",");
                                 for (var j = 0; j < t.length; j++)
@@ -192,7 +188,11 @@ function readTextFile(file, value, map, mage) {
     }
     rawFile.send();
 }
-</script><br><br><br>
+</script>
+<button onclick="doTest()">Go Lookup</button>
+<br><br><br>
+<a href="https://billing.apexminecrafthosting.com/aff.php?aff=3548"><img src="https://apexminecrafthosting.com/images/apex-hosting-mobile.png" width="594" height="100" border="0"></a>
+<br><br><br>
 <p id="content">
 &nbsp;<i>Output will be here.</i>
 </p>
