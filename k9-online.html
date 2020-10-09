@@ -16,6 +16,31 @@ input, select {padding: 6px;}
 .pad {padding-left:64px; padding-top:32px;}
 footer {position:absolute; bottom:0; width:100%;}
 </style>
+<script>
+function verChange() {
+  var e = document.getElementById("ver");
+
+  if (e.selectedIndex > 11) {
+    e = document.getElementById("map");
+    e.options[0].disabled = true;
+    e.options[1].disabled = true;
+    e.options[2].disabled = true;
+    e.options[3].disabled = false;
+    e.options[4].disabled = true;
+    e.options[5].disabled = true;
+    if (e.selectedIndex !== 3) e.selectedIndex = 3;
+  } else {
+    e = document.getElementById("map");
+    e.options[0].disabled = false;
+    e.options[1].disabled = false;
+    e.options[2].disabled = false;
+    e.options[3].disabled = false;
+    e.options[4].disabled = false;
+    e.options[5].disabled = false;
+    if (e.selectedIndex == 3) e.selectedIndex = 0;
+  }
+}
+</script>
 
 <form>
   <label for="type">Choose a type:</label>
@@ -28,7 +53,7 @@ footer {position:absolute; bottom:0; width:100%;}
 <br>
 <form>
   <label for="ver">Choose a version:</label>
-  <select name="ver" id="ver">
+  <select name="ver" id="ver" onChange="verChange()">
     <option value="1.16.3">1.16.3</option>
     <option value="1.16.2">1.16.2</option>
     <option value="1.16.1">1.16.1</option>
@@ -41,13 +66,13 @@ footer {position:absolute; bottom:0; width:100%;}
     <option value="1.9.4" disabled>1.9.4</option>
     <option value="1.8.9">1.8.9</option>
     <option value="1.8.8">1.8.8</option>
-    <option value="1.7.10" disabled>1.7.10</option>
-    <option value="1.7.2" disabled>1.7.2</option>
-    <option value="1.6.4" disabled>1.6.4</option>
-    <option value="1.5.2" disabled>1.5.2</option>
-    <option value="1.4.7" disabled>1.4.7</option>
-    <option value="1.3.2" disabled>1.3.2</option>
-    <option value="1.2.5" disabled>1.2.5</option>
+    <option value="1.7.10">1.7.10</option>
+    <option value="1.7.2">1.7.2</option>
+    <option value="1.6.4">1.6.4</option>
+    <option value="1.5.2">1.5.2</option>
+    <option value="1.4.7">1.4.7</option>
+    <option value="1.3.2">1.3.2</option>
+    <option value="1.2.5">1.2.5</option>
   </select>
 </form>
 <br>
@@ -55,8 +80,11 @@ footer {position:absolute; bottom:0; width:100%;}
   <label for="map">Mappings:</label>
   <select name="map" id="map">
     <option value="intermediary2yarn">Intermediary &#8594; Yarn</option>
-    <option value="obf2intermediary" disabled>Obf &#8594; Intermediary</option>
-    <option value="spigot2yarn" disabled>Spigot &#8594; Yarn</option>
+    <option value="yarn2intermediary">Yarn &#8594; Intermediary</option>
+    <option value="spigot2yarn">Spigot &#8594; Yarn</option>
+    <option value="obf2intermediary">Obf &#8594; Spigot</option>
+    <option value="obf2intermediary">Obf &#8594; Intermediary</option>
+    <option value="intermediary2mcp">Intermediary &#8594; MCP</option>
   </select>
 </form><br>
 <form>
@@ -83,9 +111,25 @@ function doTest() {
   e = document.getElementById("value");
   var value = e.value;
 
-  readTextFile("mappings/" + ver + ".json", value, type);
+  readTextFile("mappings/" + ver + ".json", value, type, map);
 }
-function readTextFile(file, value, map) {
+function getMapN(map) {
+    if (map === "intermediary2yarn") return "intermediary";
+    if (map === "spigot2yarn") return "spigot";
+    if (map === "yarn2intermediary") return "yarn";
+    if (map === "intermediary2mcp") return "intermediary";
+    if (map === "obf2spigot") return "obf";
+    if (map === "obf2intermediary") return "obf";
+}
+function getMapX(map) {
+    if (map === "intermediary2yarn") return "obf,intermediary,yarn";
+    if (map === "spigot2yarn") return "obf,spigot,yarn";
+    if (map === "yarn2intermediary") return "yarn,intermediary,obf";
+    if (map === "intermediary2mcp") return "obf,intermediary,mcp";
+    if (map === "obf2spigot") return "obf,spigot";
+    if (map === "obf2intermediary") return "obf,intermediary,yarn";
+}
+function readTextFile(file, value, map, mage) {
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, true);
     rawFile.onreadystatechange = function () {
@@ -98,8 +142,12 @@ function readTextFile(file, value, map) {
                     var clazz = myobj.classes;
                     for (i = 0; i < clazz.length; i++) {
                         var claz = clazz[i];
-                        if (claz.intermediary === value) {
-                            document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
+                        if (claz[getMapN(mage)] === value) {
+                            var writ = "Result: ";
+                            var t = getMapX(mage).split(",");
+                            for (var j = 0; j < t.length; j++)
+                                writ += t[j] + "=" + claz[t[j]] + ", ";
+                            document.getElementById("content").innerHTML = writ;
                             return;
                         }
                     }
@@ -109,9 +157,13 @@ function readTextFile(file, value, map) {
                     var meths = myobj.methods;
                     for (i = 0; i < meths.length; i++) {
                         var claz = meths[i];
-                        if (Object.keys(claz).includes("intermediary"))
-                            if (claz.intermediary.split(".")[1] === value) {
-                                document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
+                        if (Object.keys(claz).includes("intermediary")) {
+                            if (claz[getMapN(mage)].split(".")[1] === value) {
+                                var writ = "Result: ";
+                                var t = getMapX(mage).split(",");
+                                for (var j = 0; j < t.length; j++)
+                                    writ += t[j] + "=" + claz[t[j]] + ", ";
+                                document.getElementById("content").innerHTML = writ;
                                 return;
                             }
                         }
@@ -122,15 +174,18 @@ function readTextFile(file, value, map) {
                     var fiels = myobj.fields;
                     for (i = 0; i < fiels.length; i++) {
                         var claz = fiels[i];
-                        if (Object.keys(claz).includes("intermediary"))
-                            if (claz.intermediary.split(".")[1] === value) {
-                                document.getElementById("content").innerHTML = "Obf: " + claz.obf + ", Intermediary: " + claz.intermediary + ", Yarn: " + claz.yarn;
+                        if (Object.keys(claz).includes("intermediary")) {
+                            if (claz.[getMapN(mage)].split(".")[1] === value) {
+                                var writ = "Result: ";
+                                var t = getMapX(mage).split(",");
+                                for (var j = 0; j < t.length; j++)
+                                    writ += t[j] + "=" + claz[t[j]] + ", ";
+                                document.getElementById("content").innerHTML = writ;
                                 return;
                             }
                         }
                     }
                 }
-
                 document.getElementById("content").innerHTML = "Not found?";
             }
         }
