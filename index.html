@@ -92,7 +92,7 @@ function verChange() {
     <option value="mojang2yarn">Mojmap &#8594; Yarn</option>
     <option value="mojang2spigot">Mojmap &#8594; Spigot</option>
 
-    <option value="164obf2116yarn">[TEST] 1.6 Obf&#8594;1.16 Yarn</option>
+    <option value="164obf2116yarn">[TEST] Obf &#8594; 1.16 Yarn</option>
   </select>
 </form><br><br>
 <form>
@@ -123,17 +123,11 @@ function doTest() {
   e = document.getElementById("value");
   var value = e.value;
 
-  if (map === "164obf2116yarn") {
-    readTextFile("mappings/" + "1.6.4" + ".json", value, type, "obf2spigot");
-    var value2 = document.getElementById("content").innerHTML.split("spigot=")[1].replace(",", "");
-    readTextFile("mappings/" + "1.16.4" + ".json", value2, type, "spigot2yarn");
-    return;
-  }
-
   readTextFile("mappings/" + ver + ".json", value, type, map);
 }
 function getMapN(map) {
     if (map === "intermediary2yarn") return "intermediary";
+    if (map === "spigoth2yarnn") return "spigot";
     if (map === "spigot2yarn") return "spigot";
     if (map === "yarn2intermediary") return "yarn";
     if (map === "intermediary2mcp") return "intermediary";
@@ -146,6 +140,7 @@ function getMapN(map) {
 }
 function getMapX(map) {
     if (map === "intermediary2yarn") return "obf,intermediary,yarn";
+    if (map === "spigoth2yarnn") return "obf,intermediary,yarn";
     if (map === "spigot2yarn") return "obf,spigot,intermediary,yarn";
     if (map === "yarn2intermediary") return "yarn,intermediary,obf";
     if (map === "intermediary2mcp") return "obf,intermediary,mcp";
@@ -158,23 +153,40 @@ function getMapX(map) {
 }
 function readTextFile(file, value, map, mage) {
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, true);
+    rawFile.open("GET", "https://mappings.javazilla.com/" + file, true);
     rawFile.onreadystatechange = function () {
         if(rawFile.readyState === 4) {
             if(rawFile.status === 200 || rawFile.status == 0) {
                 var allText = rawFile.responseText;
                 var myobj = JSON.parse(allText);
+                if (document.getElementById("content").innerHTML.includes("Output will"))
+                    document.getElementById("content").innerHTML = "";
+
+                var test = false;
+                var clea = false;
+                if (mage === "164obf2116yarn") {
+                  test = true;
+                  mage = "obf2spigot";
+                }
+                if (mage === "spigoth2yarnn") clea = true;
 
                 if (map === "CL") {
                     var clazz = myobj.classes;
                     for (i = 0; i < clazz.length; i++) {
                         var claz = clazz[i];
                         if (claz[getMapN(mage)] === value) {
-                            var writ = "Result: ";
+                            var writ = file.replace("mappings/","").replace(".json","") + " Result: ";
                             var t = getMapX(mage).split(",");
                             for (var j = 0; j < t.length; j++)
                                 writ += t[j] + "=" + claz[t[j]] + ", ";
-                            document.getElementById("content").innerHTML = writ;
+                            if (clea)
+                                document.getElementById("content").innerHTML += "<br>" + writ;
+                            else document.getElementById("content").innerHTML = writ;
+                            if (test) {
+                                var value2 = writ.split("spigot=")[1].replace(",","").trim();
+                                document.getElementById("content").innerHTML = document.getElementById("content").innerHTML.toString().replace("spigot=" + value2, "spigot=<span style='background-color:black;color:black'>" + value2 + "</span>");
+                                readTextFile("mappings/" + "1.16.4" + ".json", value2, map, "spigoth2yarnn");
+                            }
                             return;
                         }
                     }
@@ -213,7 +225,7 @@ function readTextFile(file, value, map, mage) {
                         }
                     }
                 }
-                document.getElementById("content").innerHTML = "Not found?";
+                document.getElementById("content").innerHTML += "<br>Not found?";
             }
         }
     }
