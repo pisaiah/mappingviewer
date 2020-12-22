@@ -85,11 +85,19 @@ function verChange() {
   <label class="l2" for="map">Mappings</label>
   <select style="min-width:220px;" name="map" id="map">
     <option value="intermediary2yarn">Intermediary &#8594; Yarn</option>
-    <option value="yarn2intermediary">Yarn &#8594; Intermediary</option>
-    <option value="spigot2yarn">Spigot &#8594; Yarn</option>
-    <option value="obf2spigot">Obf &#8594; Spigot</option>
-    <option value="obf2intermediary">Obf &#8594; Intermediary</option>
     <option value="intermediary2mcp">Intermediary &#8594; MCP</option>
+
+    <option value="yarn2intermediary">Yarn &#8594; Intermediary</option>
+    <option value="yarn2mojang">Yarn &#8594; Mojmap</option>
+
+    <option value="spigot2yarn">Spigot &#8594; Yarn</option>
+    <option value="spigot2mojang">Spigot &#8594; Mojmap</option>
+
+    <option value="obf2spigot">Obf &#8594; Spigot</option>
+    <option value="obf2intermediary">Obf &#8594; Intermediary/Yarn</option>
+
+    <option value="mojang2yarn">Mojmap &#8594; Yarn</option>
+    <option value="mojang2spigot">Mojmap &#8594; Spigot</option>
   </select>
 </form><br><br>
 <form>
@@ -129,14 +137,22 @@ function getMapN(map) {
     if (map === "intermediary2mcp") return "intermediary";
     if (map === "obf2spigot") return "obf";
     if (map === "obf2intermediary") return "obf";
+    if (map === "mojang2yarn") return "mojang";
+    if (map === "mojang2spigot") return "mojang";
+    if (map === "spigot2mojang") return "spigot";
+    if (map === "yarn2mojang") return "yarn";
 }
 function getMapX(map) {
     if (map === "intermediary2yarn") return "obf,intermediary,yarn";
-    if (map === "spigot2yarn") return "obf,spigot,yarn";
+    if (map === "spigot2yarn") return "obf,spigot,intermediary,yarn";
     if (map === "yarn2intermediary") return "yarn,intermediary,obf";
     if (map === "intermediary2mcp") return "obf,intermediary,mcp";
     if (map === "obf2spigot") return "obf,spigot";
     if (map === "obf2intermediary") return "obf,intermediary,yarn";
+    if (map === "mojang2yarn") return "obf,mojang,intermediary,yarn";
+    if (map === "mojang2spigot") return "obf,mojang,spigot,intermediary";
+    if (map === "spigot2mojang") return "obf,spigot,mojang,intermediary";
+    if (map === "yarn2mojang") return "obf,intermediary,yarn,mojang";
 }
 function readTextFile(file, value, map, mage) {
     var rawFile = new XMLHttpRequest();
