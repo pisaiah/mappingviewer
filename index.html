@@ -29,14 +29,13 @@ function verChange() {
     e = document.getElementById("map");
     for (var i = 0; i < e.options.length; i++) {
       var te = e.options[i].value;
-      if (!(te === "obf2spigot"))
-        e.options[i].disabled = true;
-      else e.selectedIndex = i;
+      if (te === "obf2spigot")
+        e.selectedIndex = i;
     }
   } else {
     e = document.getElementById("map");
     for (var i = 0; i < e.options.length; i++)
-      e.options[i].disabled = true;
+      e.options[i].disabled = false;
   }
 }
 </script>
@@ -125,9 +124,10 @@ function doTest() {
   var value = e.value;
 
   if (map === "164obf2116yarn") {
-    readTextFile("mappings/" + ver + ".json", value, type, "obf2spigot");
+    readTextFile("mappings/" + "1.6.4" + ".json", value, type, "obf2spigot");
     var value2 = document.getElementById("content").innerHTML.split("spigot=")[1].replace(",", "");
     readTextFile("mappings/" + "1.16.4" + ".json", value2, type, "spigot2yarn");
+    return;
   }
 
   readTextFile("mappings/" + ver + ".json", value, type, map);
