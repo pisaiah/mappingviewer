@@ -25,24 +25,18 @@ label {color:gray;font-style:italic;}
 function verChange() {
   var e = document.getElementById("ver");
 
-  if (e.selectedIndex > 11) {
+  if (e.selectedIndex > 13) {
     e = document.getElementById("map");
-    e.options[0].disabled = true;
-    e.options[1].disabled = true;
-    e.options[2].disabled = true;
-    e.options[3].disabled = false;
-    e.options[4].disabled = true;
-    e.options[5].disabled = true;
-    if (e.selectedIndex !== 3) e.selectedIndex = 3;
+    for (var i = 0; i < e.options.length; i++) {
+      var te = e.options[i].value;
+      if (!(te === "obf2spigot"))
+        e.options[i].disabled = true;
+      else e.selectedIndex = i;
+    }
   } else {
     e = document.getElementById("map");
-    e.options[0].disabled = false;
-    e.options[1].disabled = false;
-    e.options[2].disabled = false;
-    e.options[3].disabled = false;
-    e.options[4].disabled = false;
-    e.options[5].disabled = false;
-    if (e.selectedIndex == 3) e.selectedIndex = 0;
+    for (var i = 0; i < e.options.length; i++)
+      e.options[i].disabled = true;
   }
 }
 </script>
@@ -98,6 +92,8 @@ function verChange() {
 
     <option value="mojang2yarn">Mojmap &#8594; Yarn</option>
     <option value="mojang2spigot">Mojmap &#8594; Spigot</option>
+
+    <option value="164obf2116yarn">[TEST] 1.6 Obf&#8594;1.16 Yarn</option>
   </select>
 </form><br><br>
 <form>
@@ -127,6 +123,12 @@ function doTest() {
 
   e = document.getElementById("value");
   var value = e.value;
+
+  if (map === "164obf2116yarn") {
+    readTextFile("mappings/" + ver + ".json", value, type, "obf2spigot");
+    var value2 = document.getElementById("content").innerHTML.split("spigot=")[1].replace(",", "");
+    readTextFile("mappings/" + "1.16.4" + ".json", value2, type, "spigot2yarn");
+  }
 
   readTextFile("mappings/" + ver + ".json", value, type, map);
 }
