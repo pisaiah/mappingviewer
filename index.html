@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<header class="w3-container w3-black"><h1>MinecraftMappings Viewer&nbsp;<sup><small>BETA</small></sup></h1></header>
+<header class="w3-container w3-black">
+    <h2>MinecraftMappings Viewer&nbsp;<sup><small><i>BETA</i></small></sup></h2>
+    <p>This tool creates transitive mappings for various Minecraft versions.</p>
+</header>
 <body>
 <div class="w3-container pad">
-<p>This tool creates transitive mappings for various Minecraft versions. (intermediary2yarn, spigot2yarn, mcp2intermediary, etc..)<br>
-Original work by <a href="https://github.com/phase/">phase</a>. Updated by me. View mappings on Github: <a href="https://github.com/bukkitfabric/minecraftmappings">BukkitFabric/MinecraftMappings</a></p>
 
 <style>
-label {display: inline-block;min-width: 148px;}
-form {display: inline-block; padding: 4px;}
-input  {min-width:280px;}
-select {min-width:280px;}
-input, select {padding: 6px;}
-.pad {padding-left:64px; padding-top:32px;}
-footer {position:absolute; bottom:0; width:100%;}
+.l2 {display: block;text-align:center;}
+form {display: inline-block;padding:4px;}
+input  {min-width:410px;}
+.s2  {min-width:130px;display:block;}
+select {min-width:280px;display:block;}
+input, select {padding:6px;}
+.pad {padding-left:48px; padding-top:4em;}
+footer {position:absolute; bottom:0;width:100%;}
+.btn {padding:6px;}
+header h2{margin-bottom:-8px;padding-bottom:-8px;}
+header p {font-size:0.7em;margin-top:-8px;padding-top:-8px;}
+label {color:gray;font-style:italic;}
 </style>
 <script>
 function verChange() {
@@ -43,27 +49,28 @@ function verChange() {
 </script>
 
 <form>
-  <label for="type">Choose a type:</label>
-  <select name="type" id="type">
+  <label class="l2" for="type">Type</label>
+  <select class ="s2" name="type" id="type">
     <option value="FD">Field</option>
     <option value="MD">Method</option>
     <option value="CL">Class</option>
   </select>
 </form>
-<br>
 <form>
-  <label for="ver">Choose a version:</label>
-  <select name="ver" id="ver" onChange="verChange()">
+  <label class="l2" for="ver">Version</label>
+  <select class ="s2" name="ver" id="ver" onChange="verChange()">
+    <option value="20w51a" disabled>20w51a <i>(1.17)</i></option>
+    <option value="1.16.4" selected>1.16.4</option>
     <option value="1.16.3">1.16.3</option>
     <option value="1.16.2">1.16.2</option>
     <option value="1.16.1">1.16.1</option>
     <option value="1.15.2">1.15.2</option>
     <option value="1.14.4" disabled>1.14.4</option>
-    <option value="1.13.2" disabled>1.13.2</option>
+    <option value="1.13.2">1.13.2</option>
     <option value="1.12.2">1.12.2</option>
-    <option value="1.11.2" disabled>1.11.2</option>
-    <option value="1.10.2" disabled>1.10.2</option>
-    <option value="1.9.4" disabled>1.9.4</option>
+    <option value="1.11.2">1.11.2</option>
+    <option value="1.10.2">1.10.2</option>
+    <option value="1.9.4">1.9.4</option>
     <option value="1.8.9">1.8.9</option>
     <option value="1.8.8">1.8.8</option>
     <option value="1.7.10">1.7.10</option>
@@ -75,10 +82,9 @@ function verChange() {
     <option value="1.2.5">1.2.5</option>
   </select>
 </form>
-<br>
 <form>
-  <label for="map">Mappings:</label>
-  <select name="map" id="map">
+  <label class="l2" for="map">Mappings</label>
+  <select style="min-width:220px;" name="map" id="map">
     <option value="intermediary2yarn">Intermediary &#8594; Yarn</option>
     <option value="yarn2intermediary">Yarn &#8594; Intermediary</option>
     <option value="spigot2yarn">Spigot &#8594; Yarn</option>
@@ -86,14 +92,22 @@ function verChange() {
     <option value="obf2intermediary">Obf &#8594; Intermediary</option>
     <option value="intermediary2mcp">Intermediary &#8594; MCP</option>
   </select>
-</form><br>
+</form><br><br>
 <form>
-  <label for="value">Value to Search</label>
-  <input type="text" id="value" name="value" placeholder="field_1234">
+  <label class="l2" for="value">Value to Search</label>
+  <input type="text" id="value" name="value" placeholder="field_1234" oninput="fixType()">
 </form>
+<button class="btn" onclick="doTest()">Search</button>
 
 <br><br>
 <script>
+function fixType() {
+  var e = document.getElementById("type");
+  var ev = document.getElementById("value");
+  if (ev.value.startsWith("field_")) e.selectedIndex = 0;
+  if (ev.value.startsWith("method_")) e.selectedIndex = 1;
+  if (ev.value.startsWith("class_")) e.selectedIndex = 2;
+}
 function doTest() {
   var e = document.getElementById("type");
   var type = e.options[e.selectedIndex].value;
@@ -189,15 +203,14 @@ function readTextFile(file, value, map, mage) {
     rawFile.send();
 }
 </script>
-<button onclick="doTest()">Go Lookup</button>
 <br><br><br>
-<a href="https://billing.apexminecrafthosting.com/aff.php?aff=3548"><img src="https://apexminecrafthosting.com/images/apex-hosting-mobile.png" width="594" height="100" border="0"></a>
+<a href="https://billing.apexminecrafthosting.com/aff.php?aff=3548"><img src="https://cdn.apexminecrafthosting.com/img/theme/apex-hosting-mobile.png" width="360" height="60" border="0"></a>
 <br><br><br>
 <p id="content">
-&nbsp;<i>Output will be here.</i>
+&nbsp;<i>(Output will be here.)</i>
 </p>
 
 </div>
 </body>
-<footer class="w3-container w3-black"><small class="w3-small">Copyright &copy; 2020 <a href="https://github.com/BukkitFabric/MinecraftMappings/blob/master/LICENSE">under MIT</a> &nbsp;|&nbsp; View Mapping Data on <a href="https://github.com/bukkitfabric/minecraftmappings">Github</a></small></footer>
+<footer class="w3-container w3-black"><small class="w3-small">&copy; 2020 <a href="https://github.com/BukkitFabric/MinecraftMappings/blob/master/LICENSE">under MIT</a> &nbsp;|&nbsp; View mappings on <a href="https://github.com/bukkitfabric/minecraftmappings">Github</a> &nbsp;|&nbsp; Original work by <a href="https://github.com/phase/">phase</a>. </small></footer>
 </html>
