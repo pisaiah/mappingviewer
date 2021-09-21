@@ -148,7 +148,7 @@ function getMapX(map) {
 }
 function readTextFile(file, value, map, mage) {
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", "https://mappings.javazilla.com/" + file, true);
+    rawFile.open("GET", "https://isaiahpatton.github.io/mappingviewer/" + file, true);
     rawFile.onreadystatechange = function () {
         if(rawFile.readyState === 4) {
             if(rawFile.status === 200 || rawFile.status == 0) {
